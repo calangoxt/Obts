@@ -19,7 +19,7 @@ export class Carro implements carroInterface {
         this.tanque = tanque
     }
     public andar(): string {
-        let distancia = rl.question(`qual a distancia que vc quer andar`);
+        let distancia = rl.questionInt(`qual a distancia que vc quer andar`);
         let combustivelNecessario = distancia / this.KML
         this.tanque -= combustivelNecessario
         if (this.tanque <= 0) {
@@ -34,7 +34,7 @@ export class Carro implements carroInterface {
         console.log(`vc tem ${this.tanque} de gasolina`);
     }
     public adicionarGasolina(): void {
-        let add = rl.question(`quanto de gasolina quer colocar no carro: `);
+        let add = rl.questionInt(`quanto de gasolina quer colocar no carro: `);
         this.tanque += add
     }
     public getCarro(): void {
@@ -44,11 +44,25 @@ export class Carro implements carroInterface {
     }
     public setCarro(): void {
         let setMarca = rl.question(`fale a marca do carro: `);
-        let setKML = rl.question(`fale a quantidade e KM/l do carro: `);
-        let setTanque = rl.question(`falea gasolina do carro: `);
-        this.marca = setMarca
-        this.KML = setKML
-        this.tanque = setTanque
+        let setKML = rl.questionInt(`fale a quantidade e KM/l do carro: `);
+        let setTanque = rl.questionInt(`falea gasolina do carro: `);
+        if (setMarca === null) {
+            this.marca = this.marca
+        } else {
+            this.marca = setMarca
+        }
+        if (setKML === null) {
+            this.KML = this.KML
+        } else {
+            this.KML = setKML
+        }
+        if (setTanque === null) {
+            this.tanque = this.tanque
+        } else {
+            this.tanque = setTanque
+        }
+
+
     }
 
 }
