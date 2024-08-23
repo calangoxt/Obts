@@ -1,69 +1,74 @@
 var rl = require('readline-sync')
-interface carroInterface {
+
+export class Carro {
+    carro: string
+    gasolina: number
     marca: string
-    KML: number
-    tanque: number
-    andar(): string
-    obterGasolina(): void
-    adicionarGasolina(): void
-    getCarro(): void
-    setCarro(): void
-}
-export class Carro implements carroInterface {
-    public marca: string
-    public KML: number
-    public tanque: number
-    constructor(marca: string, KML: number, tanque: number) {
+    kmL: number
+    constructor(carro: string, gasolina: number, marca: string, kmL: number) {
+        this.carro = carro
+        this.gasolina = gasolina
         this.marca = marca
-        this.KML = KML
-        this.tanque = tanque
-    }
-    public andar(): string {
-        let distancia = rl.questionInt(`qual a distancia que vc quer andar`);
-        let combustivelNecessario = distancia / this.KML
-        this.tanque -= combustivelNecessario
-        if (this.tanque <= 0) {
-            return `vc nao tem gasolina`
-        } else if (combustivelNecessario => this.tanque) {
-            return `vc andou ate seu destino e ainda tem ${this.tanque} de gasolina`
-        } else {
-            return ""
-        }
-    }
-    public obterGasolina(): void {
-        console.log(`vc tem ${this.tanque} de gasolina`);
-    }
-    public adicionarGasolina(): void {
-        let add = rl.questionInt(`quanto de gasolina quer colocar no carro: `);
-        this.tanque += add
-    }
-    public getCarro(): void {
-        console.log(`seu carro é da marca ${this.marca}`);
-        console.log(`seu carro faz ${this.KML}KM/L`);
-        console.log(`vc tem ${this.tanque} de gasolina`);
-    }
-    public setCarro(): void {
-        let setMarca = rl.question(`fale a marca do carro: `);
-        let setKML = rl.questionInt(`fale a quantidade e KM/l do carro: `);
-        let setTanque = rl.questionInt(`falea gasolina do carro: `);
-        if (setMarca === null) {
-            this.marca = this.marca
-        } else {
-            this.marca = setMarca
-        }
-        if (setKML === null) {
-            this.KML = this.KML
-        } else {
-            this.KML = setKML
-        }
-        if (setTanque === null) {
-            this.tanque = this.tanque
-        } else {
-            this.tanque = setTanque
-        }
+        this.kmL = kmL
 
+    }
+
+    andar(km: number): void {
+        let anda = this.gasolina - (km / this.kmL)
+        if (anda <= 0) {
+            console.log("O carro não pode andar")
+        }
+        else {
+            this.gasolina = anda
+            console.log(`Sobrou ${this.gasolina} litros de gasosa`)
+        }
+    }
+    // esse metodo serve para mostrar as informacoes do carro
+    getCarro(): void {
+        console.log(`Carro: ${this.carro} \nMarca: ${this.marca} \nGasolina: ${this.gasolina} \nkmL: ${this.kmL}`)
+    }
+    // esse metodo serve para abastecer o carro
+    abastecer(valor: number): void {
+        this.gasolina += valor
+    }
+    // esse metodo serve para imprimir a gasolina  
+    obterGasolina(): number {
+        return this.gasolina
+    }
+    // esse metodo serve para editar o carro
+    setCarro(): void {
+        let carroUp = rl.question('qual e o carro? ')
+        let marcaUp = rl.question('Qual é a marca do carro? ')
+        let gasolinaUp = rl.questionInt('Quanto de gasolina voce tem? ')
+        let kmLUp = rl.questionInt('Quantos km/L seu carro faz? ')
+        this.carro = carroUp
+        this.marca = marcaUp
+        this.gasolina = gasolinaUp
+        this.kmL = kmLUp
 
     }
 
 }
-var teste = new Carro('a', 2, 100);
+
+export class Garragem {
+    carros: Carro[]
+    constructor() {
+        this.carros = []
+    }
+    // esse metodo serve para adicionar carros na garragem
+    public addCarros(carro: Carro): void {
+        this.carros.push(carro)
+        if (this.carros.length >= 10) {
+            console.log("A garagem está cheia")
+        } else {
+            console.log("Carro adicionado com sucesso")
+        }
+
+    }
+    // esse metodo serve para mostrar os carros da garragem
+    public getCarros(): void {
+        for (let i = 0; i < this.carros.length; i++) {
+        }
+
+    }
+}
